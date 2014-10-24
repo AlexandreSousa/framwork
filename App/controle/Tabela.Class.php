@@ -39,6 +39,7 @@ class tabela{
 
 
         //AQUI FICA O CABEÇALHO DA TABELA
+        //ok
         echo
         '<table class="table table-striped table-hover">
             <tr>
