@@ -1,3 +1,3 @@
  Teste
  
- Este pequeno framwork tem o objetivo de supri uma necessidade
+ Sistema simples para agilizar a criação de formularios de inserção e listagem de dados
