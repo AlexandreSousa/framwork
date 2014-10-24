@@ -1,7 +1,16 @@
 <?php
-class tabela{
-    //TOPO BARRA DE NAVEGAÇÃO DA TABELA MASTER
-    function topo($nome,$modulo,$arquivo){
+class Tabela{
+
+    public $Files;
+    public $Modulo;
+    public $db;
+    public $Campos;
+    public $CamposSecod;
+    public $_Tb;
+    public $_Where;
+    public $_Valor;
+
+    public function Topo($nome,$modulo,$arquivo){
         echo '
         <div style="padding:0 10px;"><div  style="border-bottom: solid 3px #297ACC">
         <table width="100%" border="0" cellspacing="0" cellpadding="0">
@@ -17,9 +26,16 @@ class tabela{
         <br />
             ';
     }
-    //GERADOR AUTOMATICO DE TABELA
-    //ESTA FUNÇÃO IRA GERA UMA SQL ONDE OS DADOS VIRÃO DINAMICAMENTE
-    function Corpo($db,$campos,$where,$modulos,$files,$_campo,$_tb,$_where,$_valor){
+    public  function Corpo($db, $Campos, $_Tb,$_Where,$_Valor)
+    {
+
+
+
+        $this->db = $db;
+        $this->_Where = $_Where;
+        $this->_Valor = $_Valor;
+        $this->_Tb = $_Tb;
+        $this->Campos = $Campos;
 
 
         $pag = "$_GET[pag]";
@@ -33,81 +49,147 @@ class tabela{
         $maximo = '10';
         $inicio = ($pag * $maximo) - $maximo;
 
+        $sql = mysql_query("SELECT * FROM {$this->db} LIMIT $inicio, $maximo");
 
-
-        $sql = mysql_query("SELECT * FROM $db $where LIMIT $inicio, $maximo");
-
-
-        //AQUI FICA O CABEÇALHO DA TABELA
-        //ok
-        echo
-        '<table class="table table-striped table-hover">
+        echo'
+       <table border="1">
             <tr>
-            ';
-        $v = explode(',',$campos);;
+        ';
+        $v = explode(',',$this->Campos);
         foreach($v as $x){
             echo '<th>'.ucfirst($x).'</th>';
-
         }
-        //AQUI VAI O LOOP DA TABELA
-        echo '
-                <th colspan="2">Ações</th>
-            </tr>
-            <tr>';
-        while($dados = mysql_fetch_array($sql)){
-            $v = explode(',',$campos);;
-            foreach($v as $x){
-                $ronw =  $dados[$x];
-                if($x == $_campo){
-                    //SELEC EM SEGUNDA TABELA
-                    $ronw =  $dados[$x];
-                    $selec = "SELECT * FROM $_tb WHERE $_where = '$ronw'";
-                    $array = mysql_query($selec);
-                    //VERIFICAR SE O CAMPO ESTA VAZIO CASO ESTEJA CRIAR LINHA DE TABELA VAZIA
-                    $linhas = mysql_num_rows($array);
-                    if($linhas == '0'){
-                        echo '<td>&nbsp;</td>';
-                    }else{
-                        while($result = mysql_fetch_array($array)){
-                            $qrf = $result[$_valor];
-                            echo '<td>'.$qrf.'</td>';
-                        }
+        echo '<th colspan="2">Ações</th>';
+        echo '</tr>';
+
+
+
+
+        $total_campos_passados = count($v);
+
+
+/*//  pegando os dados da tabela inicial
+
+
+ */
+        $campo_sinc = explode(',', $this->CamposSecod);
+
+        $campo_sincronizado = $campo_sinc;
+        $campo_sincronizado_todos = $campo_sinc;
+
+
+        $total_campos_sincronizados = (count($campo_sincronizado_todos));
+        //echo $total_campos_sincronizados;
+
+        while($dados = mysql_fetch_array($sql)) {
+            echo '<tr>';
+
+
+
+//echo $campos_consulta_dados['nome'];
+            for($b=0;$b<$total_campos_passados;$b++) {
+                $campo_atual = $v[$b];
+                //echo $campo_atual;
+
+
+
+                echo '<td>';
+                for ($c = 0; $c < $total_campos_sincronizados; $c++){
+                    //echo $c;
+                    if ($campo_sincronizado[$c] == $v[$b]) {
+                        $consulta_dados_inicial = "select * from menu where id = '$dados[id_menu]'";
+                        $query_consulta_dados_inicial = mysql_query($consulta_dados_inicial);
+                        $campos_consulta_dados = mysql_fetch_assoc($query_consulta_dados_inicial);
+
+
+                        echo $dados[$campo_atual] . '// ' . $campos_consulta_dados['nome'];
+
+                    } else {
+
+                        echo $dados[$campo_atual];
                     }
-                }else{
-                    echo "<td>$ronw</td>";
                 }
-            }
-            echo '
-                <td width="1"><a href="?pg=modulos/'.$modulos.'/edit_'.$files.'&id='.$dados[id].'" class="fa fa-edit"></a></td>
-                <td width="1"><a href="?pg=modulos/'.$modulos.'/dell_'.$files.'&id='.$dados[id].'" class="fa fa-close" style="color:#FF0000;"></a> </td>
-            </tr>';
-        }
-        echo '
-        </table>';
-
-        //PAGINAÇÃO COM NUMERAÇÃO
-        echo '<ul class="pagination">';
-        $sql_res = mysql_query("SELECT * FROM $db $where");
-        $total = mysql_num_rows($sql_res);
-        $paginas = ceil($total/$maximo);
-        $links = '5';
-        echo "<li><a href=\"?pg=modulos/$modulos/list_$files&pag=1\">«</a></li>";
-        for ($i = $pag-$links; $i <= $pag-1; $i++){
-            if($i >= 0){
-                echo "<li><a href=\"?pg=modulos/$modulos/list_$files&pag=$i\">$i</a></li>";
-            }
-        }
-
-        echo '<li class="disabled"><a href="#">'.$pag.'</a></li>';
-        for($i = $pag +1; $i <= $pag+$links; $i++){
-            if($i > $paginas){
-            }  else {
-                echo "<li><a href=\"?pg=modulos/$modulos/list_$files&pag=$i\">$i</a></li>";
+                echo '</td>';
 
             }
+
+
+
+
+
+        /*    $xx = explode(',',$this->CamposSecod);
+            foreach($xx as $cc){
+
+                //echo $cc.'<br>';
+
+            }
+            foreach ($v as $x) {
+                $row = $dados[$x];
+
+                    if($xx == $x){
+                       echo "<td></td>";
+
+                    }else{
+                        echo "<td>";
+                        echo  $row;
+
+
+
+                        echo "</td>";
+
+                    }
+
+
+            }
+*/
+            echo '<td width="1"><a href="?pg=modulos/'.$modulos.'/edit_'.$files.'&id='.$dados[id].'" class="fa fa-edit"></a></td>
+                <td width="1"><a href="?pg=modulos/'.$modulos.'/dell_'.$files.'&id='.$dados[id].'" class="fa fa-close" style="color:#FF0000;"></a> </td>';
+            echo '</tr>';
         }
 
-        echo "<li><a href=\"?pg=modulos/$modulos/list_$files&pag=$paginas\">»</a></li>";
 
+
+        echo '</table>';
     }
+
+    /**
+     * @param mixed $CamposSecod
+     */
+    public function setCamposSecod($CamposSecod)
+    {
+        $camp = explode(',',$this->CamposSecod = $CamposSecod);
+
+
+        foreach ($camp as $cx) {
+             $cx.'<br>';
+        }
+
+        return $cx;
+    }
+
+    /**
+     * @param mixed $Tb
+     */
+    public function setTb($Tb)
+    {
+        $this->_Tb = $Tb;
+    }
+
+    /**
+     * @param mixed $Valor
+     */
+    public function setValor($Valor)
+    {
+        $this->_Valor = $Valor;
+    }
+
+    /**
+     * @param mixed $Where
+     */
+    public function setWhere($Where)
+    {
+        $this->_Where = $Where;
+    }
+
+
 }
