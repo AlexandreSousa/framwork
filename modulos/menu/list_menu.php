@@ -1,6 +1,7 @@
 <?php
 $table->Topo('menu','menu','menu');
-$table->setCamposSecod('id_menu,link','db2,db3','id,id','nome,nome2');
+$table->setCamposSecod('id_menu,icone');
+$table->setDbSecond('nome,icones');
 $table->Corpo('menu_sub','id,nome,id_menu,link,icone','id_menu','menu','id','nome');
 
 

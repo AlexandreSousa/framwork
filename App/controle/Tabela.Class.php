@@ -9,6 +9,7 @@ class Tabela{
     public $_Tb;
     public $_Where;
     public $_Valor;
+    public $DbSecond;
 
     public function Topo($nome,$modulo,$arquivo){
         echo '
@@ -62,8 +63,22 @@ class Tabela{
         echo '<th colspan="2">Ações</th>';
         echo '</tr>';
 
-        $xx = explode(',',$this->CamposSecod);
+        $xx  = explode(',',$this->CamposSecod);
+        $xdb = explode(',',$this->DbSecond);
+        print_r($xdb);
+        $cont = count($xdb);
 
+        $xxkey = array_keys($xx);
+        $dbkey = array_keys($xdb);
+        foreach ($xxkey as $k) {
+             $k.'<br>';
+        }
+
+        foreach($dbkey as $t){
+
+
+             $t.'<br>';
+        }
         while($dados = mysql_fetch_array($sql)) {
             echo '<tr>';
 
@@ -77,7 +92,15 @@ class Tabela{
                         }
                     }
                             if ($e == "1") {
-                                echo "<td>-----</td>";
+
+
+                                    echo '<td>';
+                                echo $x;
+                                foreach ($xxkey as $k) {
+                                    echo $xdb[$k].'<br>';
+                                }
+                                    echo '</td>';
+
 
                             }else{
                                 $row = $dados[$x];
@@ -103,16 +126,17 @@ class Tabela{
      */
     public function setCamposSecod($CamposSecod)
     {
-        $camp = explode(',',$this->CamposSecod = $CamposSecod);
+        $this->CamposSecod = $CamposSecod;
 
-
-        foreach ($camp as $cx) {
-            $cx.'<br>';
-        }
-
-        return $cx;
     }
+    /**
+     * @param mixed $DbSecond
+     */
+    public function setDbSecond($DbSecond)
+    {
+        $this->DbSecond = $DbSecond;
 
+    }
     /**
      * @param mixed $Tb
      */
