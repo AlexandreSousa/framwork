@@ -29,8 +29,6 @@ class Tabela{
     public  function Corpo($db, $Campos, $_Tb,$_Where,$_Valor)
     {
 
-
-
         $this->db = $db;
         $this->_Where = $_Where;
         $this->_Valor = $_Valor;
@@ -45,103 +43,51 @@ class Tabela{
             $pag = '1';
         }
 
-
         $maximo = '10';
         $inicio = ($pag * $maximo) - $maximo;
 
         $sql = mysql_query("SELECT * FROM {$this->db} LIMIT $inicio, $maximo");
 
         echo'
-       <table border="1">
+
+       <table border="1" width="100%">
             <tr>
         ';
+
         $v = explode(',',$this->Campos);
+
         foreach($v as $x){
             echo '<th>'.ucfirst($x).'</th>';
         }
         echo '<th colspan="2">Ações</th>';
         echo '</tr>';
 
-
-
-
-        $total_campos_passados = count($v);
-
-
-/*//  pegando os dados da tabela inicial
-
-
- */
-        $campo_sinc = explode(',', $this->CamposSecod);
-
-        $campo_sincronizado = $campo_sinc;
-        $campo_sincronizado_todos = $campo_sinc;
-
-
-        $total_campos_sincronizados = (count($campo_sincronizado_todos));
-        //echo $total_campos_sincronizados;
+        $xx = explode(',',$this->CamposSecod);
 
         while($dados = mysql_fetch_array($sql)) {
             echo '<tr>';
 
-
-
-//echo $campos_consulta_dados['nome'];
-            for($b=0;$b<$total_campos_passados;$b++) {
-                $campo_atual = $v[$b];
-                //echo $campo_atual;
-
-
-
-                echo '<td>';
-                for ($c = 0; $c < $total_campos_sincronizados; $c++){
-                    //echo $c;
-                    if ($campo_sincronizado[$c] == $v[$b]) {
-                        $consulta_dados_inicial = "select * from menu where id = '$dados[id_menu]'";
-                        $query_consulta_dados_inicial = mysql_query($consulta_dados_inicial);
-                        $campos_consulta_dados = mysql_fetch_assoc($query_consulta_dados_inicial);
-
-
-                        echo $dados[$campo_atual] . '// ' . $campos_consulta_dados['nome'];
-
-                    } else {
-
-                        echo $dados[$campo_atual];
+                foreach ($v as $x)
+                {
+                    $e = "0";
+                    foreach ($xx as $p)
+                    {
+                        if ($p == $x) {
+                            $e = "1";
+                        }
                     }
+                            if ($e == "1") {
+                                echo "<td>-----</td>";
+
+                            }else{
+                                $row = $dados[$x];
+                                echo "<td>";
+                                echo $row;
+                                echo "</td>";
+
+                            }
                 }
-                echo '</td>';
 
-            }
-
-
-
-
-
-        /*    $xx = explode(',',$this->CamposSecod);
-            foreach($xx as $cc){
-
-                //echo $cc.'<br>';
-
-            }
-            foreach ($v as $x) {
-                $row = $dados[$x];
-
-                    if($xx == $x){
-                       echo "<td></td>";
-
-                    }else{
-                        echo "<td>";
-                        echo  $row;
-
-
-
-                        echo "</td>";
-
-                    }
-
-
-            }
-*/
             echo '<td width="1"><a href="?pg=modulos/'.$modulos.'/edit_'.$files.'&id='.$dados[id].'" class="fa fa-edit"></a></td>
                 <td width="1"><a href="?pg=modulos/'.$modulos.'/dell_'.$files.'&id='.$dados[id].'" class="fa fa-close" style="color:#FF0000;"></a> </td>';
             echo '</tr>';
@@ -161,7 +107,7 @@ class Tabela{
 
 
         foreach ($camp as $cx) {
-             $cx.'<br>';
+            $cx.'<br>';
         }
 
         return $cx;

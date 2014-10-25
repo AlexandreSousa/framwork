@@ -16,6 +16,7 @@ $form->input('text','Usuario','usuario','usuario','','','required','20','Nome do
 echo '&nbsp';
 $form->input('text','Senha','senha','senha','','','requird','20','Nome do usuario e necessario');
 echo '<br>';
+$form->input('text','nome','name','i','','dica','','200','sjdlfjsdljfl');
 $form->Tbuton('submit','Gravar');
 ?>
 </form>
