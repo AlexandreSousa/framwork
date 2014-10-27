@@ -11,7 +11,9 @@ if($_POST['post'] == 'ok'){
 
  $campos = $_POST['campo'];
  $tabela = 'usuarios';
- $_db->update($tabela,$campos);
+
+ $id = $_POST['id'];
+ $_db->update($tabela,$campos,$id);
 
 }
 
@@ -33,5 +35,6 @@ $form->input('text','Senha','senha','senha',$mostra['senha'],'','','20','');
 ?>
     <br>
     <input type="hidden" value="ok" name="post" id="post">
+    <input type="hidden" value="<?php echo $mostra['id'] ?>" name="id" id="post">
     <input type="submit" class="btn btn-primary" value="submit" name="submit" id="submit">
 </form>

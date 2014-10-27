@@ -25,7 +25,7 @@ class db{
         return $val;
 
     }
-    function update($_db,$campos,$where){
+   public function update($_db,$campos,$where){
         $keys = array_keys($campos);
 
 
@@ -42,10 +42,10 @@ class db{
         }
         $size = strlen($variavel);
 
-        $sis = substr($variavel,0, $size-1);
+         $sis = substr($variavel,0, $size-1);
 
-        $sql = "UPDATE  `$_db` SET  $sis  WHERE `id` = '$where'";
-        mysql_query($sql);
+          $sql = "UPDATE  `$_db` SET  $sis  WHERE `id` = '$where'";
+          mysql_query($sql);
     }
     function dell($_db,$id,$modulo,$arquivo){
         $sql = "DELETE FROM `$_db` WHERE `id` = '$id'";

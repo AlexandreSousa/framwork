@@ -26,14 +26,16 @@ class Form{
     /*
      * SELECT MENU PEGANDO PARAMETRO DO DB
      */
-    function menudb($db,$where,$name,$id,$campo1,$campo2,$tamanho){
+    function menudb($db,$label,$where,$name,$id,$campo1,$campo2,$tamanho){
 
         $sql = mysql_query("SELECT * FROM $db $where");
+        echo '<label>'.$label.':<br />';
         echo '<select class="form-control" style="width:'.$tamanho.'px;"  name="campo['.$name.']" id="ids['.$id.']">';
         while($dados = mysql_fetch_assoc($sql)){
             echo '<option  value="'.$dados[$campo1].'">'.$dados[$campo2].'</option>';
         }
         echo '</select>';
+        echo '</label>';
     }
     /*
      * FUNÇÃO PARA GERA RADIO BOX
