@@ -1,5 +1,8 @@
 <?php
 $table->Topo('menu','menu','menu');
+
+//SETA DO O CABEÇALHO DA TABELA
+$table->setHerd('id,Nome,Menu,Link,icone');
 //INDICAÇÃO DO SEGUNDO CAMPO
 $table->setCamposSecod('id_menu,icone');
 //INDICAÇÃO DO NOME DA TABELA DO SEGUNDO CAMPO

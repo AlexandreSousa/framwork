@@ -10,6 +10,7 @@ class Tabela{
     public $_Where;
     public $_Valor;
     public $DbSecond;
+    public $Herd;
 
     public function Topo($nome,$modulo,$arquivo){
         echo '
@@ -57,9 +58,10 @@ class Tabela{
         $y      = explode(',',$this->DbSecond);
         $w      = explode(',',$this->_Where);
         $val    = explode(',',$this->_Valor);
+        $h      = explode(',',$this->Herd);
 
-        foreach($v as $x){
-            echo '<th>'.ucfirst($x).'</th>';
+        foreach($h as $h1){
+            echo '<th>'.ucfirst($h1).'</th>';
         }
         echo '<th colspan="2">Ações</th>';
         echo '</tr>';
@@ -101,7 +103,7 @@ class Tabela{
                                             $qr = mysql_query($sql2);
                                             $array = mysql_fetch_array($qr);
                                             $ccx = $val[$e];
-                                            echo '<th>'.$array[$ccx].'</th>';
+                                            echo '<td style="color: #C00D09">'.$array[$ccx].'</td>';
                                         }
                                     }
                                 }
@@ -186,6 +188,14 @@ class Tabela{
     public function setWhere($Where)
     {
         $this->_Where = $Where;
+    }
+
+    /**
+     * @param mixed $Herd
+     */
+    public function setHerd($Herd)
+    {
+        $this->Herd = $Herd;
     }
 
 
