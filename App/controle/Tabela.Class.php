@@ -65,50 +65,34 @@ class Tabela{
 
         $xx  = explode(',',$this->CamposSecod);
         $xdb = explode(',',$this->DbSecond);
-        print_r($xdb);
-        $cont = count($xdb);
-
-        $xxkey = array_keys($xx);
-        $dbkey = array_keys($xdb);
-        foreach ($xxkey as $k) {
-             $k.'<br>';
-        }
-
-        foreach($dbkey as $t){
 
 
-             $t.'<br>';
-        }
         while($dados = mysql_fetch_array($sql)) {
             echo '<tr>';
 
-                foreach ($v as $x)
-                {
-                    $e = "0";
-                    foreach ($xx as $p)
-                    {
-                        if ($p == $x) {
-                            $e = "1";
+                foreach ($v as $x) {
+
+                    /*
+
+                     $contagem = count($xdb);
+                    for($f=0; $f<$contagem;$f++){
+                        $m = $xdb[$f];
+                    }
+                    */
+                    foreach ($xx as $g) {
+                        $isEquals = false;
+                        if ($x == $g) {
+
+                            echo '<td>' . $x . '</td>';
+                            $isEquals = true;
+                        }
+
+
+                        if (!$isEquals) {
+                            echo '<td>' . $dados[$x] . '</td>';
                         }
                     }
-                            if ($e == "1") {
 
-
-                                    echo '<td>';
-                                echo $x;
-                                foreach ($xxkey as $k) {
-                                    echo $xdb[$k].'<br>';
-                                }
-                                    echo '</td>';
-
-
-                            }else{
-                                $row = $dados[$x];
-                                echo "<td>";
-                                echo $row;
-                                echo "</td>";
-
-                            }
                 }
 
             echo '<td width="1"><a href="?pg=modulos/'.$modulos.'/edit_'.$files.'&id='.$dados[id].'" class="fa fa-edit"></a></td>
