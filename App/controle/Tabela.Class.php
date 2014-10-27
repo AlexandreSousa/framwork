@@ -26,7 +26,7 @@ class Tabela{
             </table>
         </div>
         <br />
-            ';
+        ';
     }
     public  function Corpo($db, $Campos,$mod,$file)
     {
