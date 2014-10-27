@@ -27,13 +27,10 @@ class Tabela{
         <br />
             ';
     }
-    public  function Corpo($db, $Campos, $_Tb,$_Where,$_Valor)
+    public  function Corpo($db, $Campos,$mod,$file)
     {
 
         $this->db = $db;
-        $this->_Where = $_Where;
-        $this->_Valor = $_Valor;
-        $this->_Tb = $_Tb;
         $this->Campos = $Campos;
 
 
@@ -55,7 +52,11 @@ class Tabela{
             <tr>
         ';
 
-        $v = explode(',',$this->Campos);
+        $v      = explode(',',$this->Campos);
+        $z      = explode(',',$this->CamposSecod);
+        $y      = explode(',',$this->DbSecond);
+        $w      = explode(',',$this->_Where);
+        $val    = explode(',',$this->_Valor);
 
         foreach($v as $x){
             echo '<th>'.ucfirst($x).'</th>';
@@ -63,46 +64,88 @@ class Tabela{
         echo '<th colspan="2">Ações</th>';
         echo '</tr>';
 
-        $xx  = explode(',',$this->CamposSecod);
-        $xdb = explode(',',$this->DbSecond);
-
-
+        /**
+         * CONTEUDO DA TABELA
+         */
         while($dados = mysql_fetch_array($sql)) {
             echo '<tr>';
 
-                foreach ($v as $x) {
-
+                foreach ($v as $b) {
                     /*
+                     * COMPARANDO O MODIFICADOR COM O CAMPO DA TABELA
+                     */
+                    $isEquals = false;
 
-                     $contagem = count($xdb);
-                    for($f=0; $f<$contagem;$f++){
-                        $m = $xdb[$f];
-                    }
-                    */
-                    foreach ($xx as $g) {
-                        $isEquals = false;
-                        if ($x == $g) {
+                    $arrlength = count($z);
 
-                            echo '<td>' . $x . '</td>';
+                    for ($x = 0; $x < $arrlength; $x++) {
+                        $m = $z[$x];
+
+
+
+                        if ($b == $m) {
+
+                            $len2 = count($w);
+
+                            for ($ww=0; $ww<$len2; $ww++){
+                                $w[$ww];
+
+                                $len3 = count($val);
+                                for($e=0;$e<$len3;$e++){
+
+                                    if($ww == $e){
+                                        if($ww == $x){
+                                           // echo '<th>' . $y[$x] .'-'.$w[$ww] .'-'.$e. '-'.$dados[$b].'</th>';
+
+                                            $sql2 = "SELECT * FROM $y[$x]  WHERE $w[$ww] = '$dados[$b]'";
+                                            $qr = mysql_query($sql2);
+                                            $array = mysql_fetch_array($qr);
+                                            $ccx = $val[$e];
+                                            echo '<th>'.$array[$ccx].'</th>';
+                                        }
+                                    }
+                                }
                             $isEquals = true;
                         }
-
-
-                        if (!$isEquals) {
-                            echo '<td>' . $dados[$x] . '</td>';
                         }
                     }
-
+                    if (!$isEquals) echo '<td>' . $dados[$b] . '</td>';
                 }
 
-            echo '<td width="1"><a href="?pg=modulos/'.$modulos.'/edit_'.$files.'&id='.$dados[id].'" class="fa fa-edit"></a></td>
-                <td width="1"><a href="?pg=modulos/'.$modulos.'/dell_'.$files.'&id='.$dados[id].'" class="fa fa-close" style="color:#FF0000;"></a> </td>';
+            echo '<td width="1"><a href="?pg=modulos/'.$mod.'/edit_'.$file.'&id='.$dados[id].'" class="fa fa-edit"></a></td>
+                <td width="1"><a href="?pg=modulos/'.$mod.'/dell_'.$file.'&id='.$dados[id].'" class="fa fa-close" style="color:#FF0000;"></a> </td>';
             echo '</tr>';
-        }
+                echo '</tr>';
 
-
+            }
 
         echo '</table>';
+
+
+        //PAGINAÇÃO COM NUMERAÇÃO
+        echo '<ul class="pagination">';
+        $sql_res = mysql_query("SELECT * FROM $db $where");
+        $total = mysql_num_rows($sql_res);
+        $paginas = ceil($total/$maximo);
+        $links = '5';
+        echo "<li><a href=\"?pg=modulos/$mod/list_$file&pag=1\">«</a></li>";
+        for ($i = $pag-$links; $i <= $pag-1; $i++){
+            if($i >= 0){
+                echo "<li><a href=\"?pg=modulos/$mod/list_$file&pag=$i\">$i</a></li>";
+            }
+        }
+
+        echo '<li class="disabled"><a href="#">'.$pag.'</a></li>';
+        for($i = $pag +1; $i <= $pag+$links; $i++){
+            if($i > $paginas){
+            }  else {
+                echo "<li><a href=\"?pg=modulos/$mod/list_$file&pag=$i\">$i</a></li>";
+
+            }
+        }
+
+        echo "<li><a href=\"?pg=modulos/$mod/list_$file&pag=$paginas\">»</a></li>";
+
     }
 
     /**
