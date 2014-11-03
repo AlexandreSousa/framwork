@@ -6,7 +6,7 @@ if($js == 0){
 
 ?>
 <?php 
-$path = "system/js/";
+$path = "../system/js/";
 $diretorio = dir($path);  
 while($arquivo = $diretorio -> read()){ 
     
@@ -20,7 +20,7 @@ while($arquivo = $diretorio -> read()){
          
     }else{ ?>
 
-<script type="text/javascript" src="system/js/<?php echo $arquivo; ?>"></script>
+<script type="text/javascript" src="../system/js/<?php echo $arquivo; ?>"></script>
      <?php   
     }
     

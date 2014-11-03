@@ -5,7 +5,7 @@ class Form{
      *
      */
     function input($type,$label,$name,$id,$value,$placeholder,$required,$size,$title){
-        echo '<label>'.$label.':<br />';
+        echo '<label>'.$label.'<br />';
         echo '<input type="'.$type.'" class="form-control" name="campo['.$name.']" id="ids['.$id.']" value="'.$value.'" placeholder="'.$placeholder.'" '.$required.' size="'.$size.'" title="'.$title.'"/>';
         echo '</label>';
     }
@@ -65,9 +65,9 @@ class Form{
 
         echo '<input type="submit" class="btn btn-primary" value="'.$value.'" name="'.$nome.'">';
     }
-    function Tformi($nome){
+    function Tformi($nome,$metodo){
 
-        echo '<form name="'.$nome.'" id="'.$nome.'" action="" enctype="multipart/form-data">';
+        echo '<form method="'.$metodo.'" name="'.$nome.'" id="'.$nome.'" action="" enctype="multipart/form-data">';
     }
     function Tformf(){
         echo '</form>';

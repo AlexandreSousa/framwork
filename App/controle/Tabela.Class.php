@@ -11,6 +11,7 @@ class Tabela{
     public $_Valor;
     public $DbSecond;
     public $Herd;
+    public $PrimaryKey;
 
     public function Topo($nome,$modulo,$arquivo){
         echo '
@@ -49,7 +50,7 @@ class Tabela{
 
         echo'
 
-       <table border="1" width="100%">
+       <table width="100%" border="0" cellpadding="0" class="table table-striped table-hover" cellspacing="0">
             <tr>
         ';
 
@@ -114,8 +115,8 @@ class Tabela{
                     if (!$isEquals) echo '<td>' . $dados[$b] . '</td>';
                 }
 
-            echo '<td width="1"><a href="?pg=modulos/'.$mod.'/edit_'.$file.'&id='.$dados[id].'" class="fa fa-edit"></a></td>
-                <td width="1"><a href="?pg=modulos/'.$mod.'/dell_'.$file.'&id='.$dados[id].'" class="fa fa-close" style="color:#FF0000;"></a> </td>';
+            echo '<td width="1"><a href="?pg=modulos/'.$mod.'/edit_'.$file.'&id='.$dados[$this->PrimaryKey].'" class="fa fa-edit"></a></td>
+                <td width="1"><a href="?pg=modulos/'.$mod.'/dell_'.$file.'&id='.$dados[$this->PrimaryKey].'" class="fa fa-close" style="color:#FF0000;"></a> </td>';
             echo '</tr>';
                 echo '</tr>';
 
@@ -176,6 +177,8 @@ class Tabela{
 
     /**
      * @param mixed $Valor
+     *
+     * Variavel destinada a uso
      */
     public function setValor($Valor)
     {
@@ -198,5 +201,8 @@ class Tabela{
         $this->Herd = $Herd;
     }
 
+    public function setPrimaryKey($Primary){
+       echo  $this->PrimaryKey = $Primary;
+    }
 
 }

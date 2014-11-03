@@ -1,19 +1,20 @@
 <?php
 class db{
     public $_db;
+    public $Key;
 
     public function create($tabela,$campos)
     {
 
         if($_POST['post'] == 'ok') {
         $keys = array_keys($campos);
-        $chaves = implode(',', $keys);
+        $chaves = "`".implode("`,`", $keys)."`";
         $valores = "'" . implode("','", $campos) . "'";
-        $sql = "INSERT INTO `$tabela` ($chaves)VALUES ($valores)";
+        $sql = "INSERT INTO {$tabela} ({$chaves})VALUES ({$valores})";
         mysql_query($sql);
 
 
-        $alert = new Alert();
+        $alert = new Alert;
         $alert->Talert();
     }
     }
@@ -44,16 +45,24 @@ class db{
 
          $sis = substr($variavel,0, $size-1);
 
-          $sql = "UPDATE  `$_db` SET  $sis  WHERE `id` = '$where'";
-          mysql_query($sql);
+           $sql = "UPDATE  `$_db` SET  $sis  WHERE `{$this->Key}` = '$where'";
+           mysql_query($sql);
     }
     function dell($_db,$id,$modulo,$arquivo){
-        $sql = "DELETE FROM `$_db` WHERE `id` = '$id'";
+        $sql = "DELETE FROM `$_db` WHERE `{$this->Key}` = '$id'";
         mysql_query($sql);
 
         if(isset($modulo)){
             echo '<meta http-equiv="refresh" content="0;URL=?pg=modulos/'.$modulo.'/list_'.$arquivo.'" />';
         }
 
+    }
+
+    /**
+     * @param mixed $Key
+     */
+    public function setKey($Key)
+    {
+        $this->Key = $Key;
     }
 }

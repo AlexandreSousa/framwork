@@ -1,5 +1,5 @@
 <?php include('chk.php'); ?>
-<?php require_once('Connections/config.php'); ?>
+<?php require_once('../Connections/config.php'); ?>
 <?php
 if (!function_exists("GetSQLValueString")) {
 function GetSQLValueString($theValue, $theType, $theDefinedValue = "", $theNotDefinedValue = "") 
@@ -41,4 +41,15 @@ $totalRows_qr_login = mysql_num_rows($qr_login);
 $id_level   = $row_qr_login['id_level'];
 $id_emp 	= $row_qr_login['id_emp'];
 ?>
-<div class="container-fluid">Header</div>
+<style>
+    .demo-notice{
+        background: none repeat scroll 0 0 #D75F07;
+        color:#FFF;
+        line-height:1em;
+        text-align:center;
+        font:12px "Trebuchet MS", Arial, Helvetica, sans-serif;
+        font-variant:small-caps;
+    }
+</style>
+<p class="demo-notice">Sistema Licenciado Para: SB</p>
+<div style="background-color: #080808; height: 30px; margin-top: -10px; margin-bottom: 4px;">&nbsp;</div>
