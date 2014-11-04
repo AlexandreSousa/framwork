@@ -7,7 +7,7 @@ if($css == 0){
 ?>
 
 <?php 
-$path = "../system/css/";
+$path = "system/css/";
 $diretorio = dir($path);  
 while($arquivo = $diretorio -> read()){ 
     
@@ -21,7 +21,7 @@ while($arquivo = $diretorio -> read()){
          
     }else{ ?>
 
-<link href="../system/css/<?php echo $arquivo; ?>" rel="stylesheet" type="text/css" />
+<link href="system/css/<?php echo $arquivo; ?>" rel="stylesheet" type="text/css" />
      <?php   
     }
     
